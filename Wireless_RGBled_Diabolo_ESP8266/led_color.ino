@@ -15,59 +15,59 @@ void led_color(char color,int led,int DelayTime)
   }
   else if(color == 'a')
   {
-    //Hotpink
+    //Red
     R=255;
-    G=105;
-    B=180;  
+    G=0;
+    B=0;  
   }
   else if(color == 'b')
   {
-    //Magenta
+    //Orange
     R=255;
-    G=0;
-    B=255;  
+    G=165;
+    B=0;  
   }
   else if(color == 'c')
   {
-    //Darkochild1
-    R=191;
-    G=62;
-    B=255;  
+    //Yellow
+    R=255;
+    G=255;
+    B=0;  
   }
   else if(color == 'd')
+  {
+    //Green
+    R=0;
+    G=255;
+    B=0;  
+  }
+  else if(color == 'e')
   {
     //Blue
     R=0;
     G=0;
     B=255;  
   }
-  else if(color == 'e')
-  {
-    //darkSkyBlue
-    R=0;
-    G=160;
-    B=255;  
-  }
   else if(color == 'f')
   {
-    //Turquoise
+    //Cyan
     R=0;
-    G=200;
+    G=127;
     B=255;  
   }
   else if(color == 'g')
   {
-    //Cyan
-    R=0;
-    G=255;
+    //purple
+    R=139;
+    G=0;
     B=255;  
   }
   else if(color == 'h')
   {
     //MediumSpringGreen
-    R=0;
-    G=255;
-    B=154;  
+    //rainbow(20);
+    rainbowCycle(20);
+    //theaterChaseRainbow(50); 
   }
   else if(color == 'i')
   {
@@ -118,11 +118,12 @@ void led_color(char color,int led,int DelayTime)
     pixels.show();
     delay(DelayTime);
   }
+  /*Serial.println(color);
   Serial.print("R:");
   Serial.println(R);
   Serial.print("G:");
   Serial.println(G);
   Serial.print("B:");
-  Serial.println(B);  
+  Serial.println(B);*/  
 }
 

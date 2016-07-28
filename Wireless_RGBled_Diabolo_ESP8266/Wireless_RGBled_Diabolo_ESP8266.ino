@@ -1,6 +1,7 @@
 #include <ESP8266WiFi.h>
 
 #include <Adafruit_NeoPixel.h>
+#include <EEPROM.h>
 
 #define Led_Data 2
 #define PixelNum 18
@@ -10,24 +11,26 @@ Adafruit_NeoPixel pixels = Adafruit_NeoPixel(PixelNum, Led_Data, NEO_GRB + NEO_K
 WiFiServer server(80); //Initialize the server on Port 80
 
 //const char* ssid = "www.facebook.com/escher.tsai";
-//const char* password = "25063990";
+const char* ssid = "dimensionplus";
+const char* password = "25063990";
 
 boolean incoming = 0;
 
 void setup() 
 {
-  WiFi.mode(WIFI_AP);
-  WiFi.softAP("W_H_O_Theatre", "12345678");
+  //WiFi.mode(WIFI_AP);
+  WiFi.mode(WIFI_STA);
+  //WiFi.softAP("W_H_O_Theatre", "12345678");
   server.begin();
   pixels.begin();
   pinMode(2,OUTPUT);
   Serial.begin(115200);
-  //delay(10);
-  //Serial.print("Connecting to ");
-  //Serial.println(ssid);
-  //WiFi.begin(ssid, password);
+  delay(10);
+  Serial.print("Connecting to ");
+  Serial.println(ssid);
+  WiFi.begin(ssid, password);
   
-  /*while (WiFi.status() != WL_CONNECTED) 
+  while (WiFi.status() != WL_CONNECTED) 
   {
     delay(500);
     Serial.print(".");
@@ -37,14 +40,14 @@ void setup()
   
   // Start the server
   server.begin();
-  Serial.println("Server started");*/
+  Serial.println("Server started");
 
-  IPAddress HTTPS_ServerIP= WiFi.softAPIP();
+  IPAddress HTTPS_ServerIP= WiFi.localIP();
   Serial.print("Server IP is: ");
   Serial.println(HTTPS_ServerIP);
   
-  // Print the IP address
-  //Serial.println(WiFi.localIP());
+  //Print the IP address
+  Serial.println(WiFi.localIP());
   for(int i=0;i<PixelNum;i++)
   {
     pixels.setPixelColor(i, pixels.Color(255,255,255));
@@ -82,13 +85,17 @@ void loop()
         }
         if(color_select == '$')
         {
-          //Serial.println("ready");
+          Serial.println("ready");
           incoming = 1; 
         }
         else if(incoming == 1)
         {
           Serial.println(color_select);
-          led_color(color_select,PixelNum,100); 
+          led_color(color_select,PixelNum,100);
+          for (int i = 0 ; i < 4096 ; i++) 
+          {
+            EEPROM.write(i, 0);
+          }
         }
       }
     }
