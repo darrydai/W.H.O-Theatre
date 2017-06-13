@@ -10,11 +10,13 @@ Adafruit_NeoPixel pixels = Adafruit_NeoPixel(PixelNum, Led_Data, NEO_GRB + NEO_K
 
 WiFiServer server(80); //Initialize the server on Port 80
 
-//const char* ssid = "www.facebook.com/escher.tsai";
-const char* ssid = "dimensionplus";
+const char* ssid = "www.facebook.com/escher.tsai";
+//const char* ssid = "dimensionplus";
 const char* password = "25063990";
 
 boolean incoming = 0;
+
+int Brightness = 15;
 
 void setup() 
 {
@@ -48,7 +50,7 @@ void setup()
   
   //Print the IP address
   Serial.println(WiFi.localIP());
-  for(int i=0;i<PixelNum;i++)
+  for(int i=0;i<PixelNum;i+=3)
   {
     pixels.setPixelColor(i, pixels.Color(255,255,255));
     pixels.show();
@@ -91,7 +93,7 @@ void loop()
         else if(incoming == 1)
         {
           Serial.println(color_select);
-          led_color(color_select,PixelNum,100);
+          led_color(color_select,PixelNum);
           for (int i = 0 ; i < 4096 ; i++) 
           {
             EEPROM.write(i, 0);

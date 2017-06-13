@@ -1,4 +1,4 @@
-void led_color(char color,int led,int DelayTime)
+void led_color(char color,int led)
 {
   int R,G,B;
   if(color == '1')
@@ -71,9 +71,9 @@ void led_color(char color,int led,int DelayTime)
   }
   else if(color == 'i')
   {
-    //Green
+    //none
     R=0;
-    G=255;
+    G=0;
     B=0;           
   }
   else if(color == 'j')
@@ -111,12 +111,13 @@ void led_color(char color,int led,int DelayTime)
     G=0;
     B=0;  
   }
+  //rgbFadeInAndOut(R,G,B,100);
   // pixels.Color takes RGB values, from 0,0,0 up to 255,255,255
-  for(int i=0;i<led;i++)
+  for(int i=0;i<led;i+=3)
   {
     pixels.setPixelColor(i, pixels.Color(R,G,B));
     pixels.show();
-    delay(DelayTime);
+    delay(250);
   }
   /*Serial.println(color);
   Serial.print("R:");
