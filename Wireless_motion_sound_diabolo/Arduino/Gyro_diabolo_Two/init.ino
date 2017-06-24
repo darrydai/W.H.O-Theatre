@@ -12,7 +12,7 @@ void wifi_init()
   Serial.println();
   Serial.print("Connected, IP address: ");
   Serial.println(WiFi.localIP());
-  //digitalWrite(LED_BUILTIN,LOW);
+  digitalWrite(2,LOW);
   
   Serial.println("Starting UDP");
   Udp.begin(localPort);

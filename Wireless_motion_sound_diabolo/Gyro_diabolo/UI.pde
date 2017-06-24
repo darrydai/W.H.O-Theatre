@@ -5,6 +5,9 @@ final class UI
   boolean diaboloConnectStatus = false;
   
   int diaboloAcce[]={0,0,0};
+  float diaboloOrientation[]={0,0,0};
+  
+  float motionTransforGain;
   
   boolean ConnectStatus(boolean Status)
   {
@@ -12,7 +15,7 @@ final class UI
     return diaboloConnectStatus;
   }
   
-  final void drawTheBlock(int x,int y,int w,int h)
+  final void drawTheCircle(int shift_x,int shift_y,int w,int h)
   {
     try
     {
@@ -26,7 +29,7 @@ final class UI
       {
         stroke(204, 102, 0);
       }
-      ellipse(x, y, w, h);
+      ellipse(shift_x, shift_y, w, h);
     }
     catch(Exception e)
     {
@@ -34,7 +37,8 @@ final class UI
     } 
   }
   
-  final void AnalyzeSound(int x,int y,int select)
+  //visullilation soud wave
+  final void AnalyzeSound(int shift_x,int shift_y,int select)
   {
     try
     {
@@ -42,7 +46,7 @@ final class UI
       strokeWeight(1);
       stroke(204, 102, 0);
       pushMatrix();
-      translate(x, y);
+      translate(shift_x, shift_y);
       switch (soundTrack)
       {
         case 1:
@@ -96,12 +100,13 @@ final class UI
     }
   }
   
-  final void imformation(int acce[],int x,int y)
+  //show the imformation on sketch
+  final void imformation(int acce[],int shift_x,int shift_y)
   {
     try 
     {
       pushMatrix();
-      translate(x, y);
+      translate(shift_x,shift_y);
       //textFont(font, 18);
       textSize(18);
       if(diaboloConnectStatus == false)
@@ -128,24 +133,21 @@ final class UI
     }
   }
   
-  final void checkAndPlayFile(int sensorVal,int select)//int sensorVal)
+  final void checkAndPlayFile(int sensorAcceVal,int selectDiabolo)//int sensorVal)
   {
-    soundTrack=select;
+    soundTrack=selectDiabolo;
     try 
     {
       switch (soundTrack)
       {
         case 1:
-          if(sensorVal>60000)
+          //acce_X value < -15,play the sound file
+          if(sensorAcceVal<(-9))
           {
-              diaboloOneSound.pause();
-          }
-          else if(sensorVal>15)
-          {
+            //if sound is end,replay the sound file
             if( diaboloOneSound.position() == diaboloOneSound.length() )
             {
               diaboloOneSound.rewind();
-              diaboloOneSound.play();
             }
             diaboloOneSound.play();
             PlayStatus = "play";
@@ -157,18 +159,14 @@ final class UI
           }
           break;
        case 2:
-          if(sensorVal>60000)
+          if(sensorAcceVal<(-12))
           {
-              diaboloTwoSound.pause();
-          }
-          else if(sensorVal>15)
-          {
-            diaboloTwoSound.play();
             if( diaboloTwoSound.position() == diaboloTwoSound.length() )
             {
               diaboloTwoSound.rewind();
-              diaboloTwoSound.play();
+              //diaboloTwoSound.play();
             }
+            diaboloTwoSound.play();
             PlayStatus = "play";
           }
           else if(diaboloTwoSound.isPlaying())
@@ -178,13 +176,12 @@ final class UI
           }
           break;
          case 3:
-          if(sensorVal>15)
+          if(sensorAcceVal>15)
           {
             diaboloThreeSound.play();
             if( diaboloThreeSound.position() == diaboloThreeSound.length() )
             {
               diaboloThreeSound.rewind();
-              diaboloThreeSound.play();
             }
             PlayStatus = "play";
           }
@@ -195,13 +192,12 @@ final class UI
           }
           break;
          case 4:
-          if(sensorVal>15)
+          if(sensorAcceVal>15)
           {
             diaboloFourSound.play();
             if( diaboloFourSound.position() == diaboloFourSound.length() )
             {
               diaboloFourSound.rewind();
-              diaboloFourSound.play();
             }
             PlayStatus = "play";
           }
@@ -212,13 +208,12 @@ final class UI
           }
           break;
          case 5:
-          if(sensorVal>15)
+          if(sensorAcceVal>15)
           {
             diaboloFiveSound.play();
             if( diaboloFiveSound.position() == diaboloFiveSound.length() )
             {
               diaboloFiveSound.rewind();
-              diaboloFiveSound.play();
             }
             PlayStatus = "play";
           }
@@ -236,5 +231,12 @@ final class UI
     {
       println("checkAndPlayFile error : " + e.toString());
     }
+  }
+  
+  void montion_Transfor(float diaboloOrientation[])
+  {
+    motionTransforGain=map(diaboloOrientation[0],0,360,-60,0);
+    print("X="+diaboloOrientation[0]);
+    println("Gain="+motionTransforGain);
   }
 }

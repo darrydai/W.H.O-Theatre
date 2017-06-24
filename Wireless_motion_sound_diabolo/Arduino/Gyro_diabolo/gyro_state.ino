@@ -9,7 +9,11 @@ void gyro_state()
   // - VECTOR_GRAVITY       - m/s^2
   
   // EULER
-  /*imu::Vector<3> euler = bno.getVector(Adafruit_BNO055::VECTOR_EULER);
+  imu::Vector<3> euler = bno.getVector(Adafruit_BNO055::VECTOR_EULER);
+
+  vector_X=euler.x();
+  vector_Y=euler.y();
+  vector_Z=euler.z();
 
   // Display the floating point data
   Serial.print("X: ");
@@ -19,8 +23,8 @@ void gyro_state()
   Serial.print(" Z: ");
   Serial.print(euler.z());
   Serial.print("\t\t");
-  rotat_z=euler.z();
-  */
+  
+ 
   // GYROSCOPE
   /*imu::Vector<3> gyroscope = bno.getVector(Adafruit_BNO055::VECTOR_GYROSCOPE);
   
@@ -75,6 +79,6 @@ void gyro_state()
   Serial.print(" Mag=");
   Serial.println(mag, DEC);
 
-  delay(1000);
+  delay(100);
 }
 

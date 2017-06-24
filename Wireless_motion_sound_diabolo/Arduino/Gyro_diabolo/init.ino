@@ -6,13 +6,13 @@ void wifi_init()
   while (WiFi.status() != WL_CONNECTED)
   {
     delay(500);
-    //digitalWrite(LED_BUILTIN,HIGH);
+    digitalWrite(LED_BUILTIN,HIGH);
     Serial.print(".");
   }
   Serial.println();
   Serial.print("Connected, IP address: ");
   Serial.println(WiFi.localIP());
-  //digitalWrite(LED_BUILTIN,LOW);
+  digitalWrite(LED_BUILTIN,LOW);
   
   Serial.println("Starting UDP");
   Udp.begin(localPort);
