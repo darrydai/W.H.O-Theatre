@@ -3,16 +3,22 @@
 #include <Adafruit_NeoPixel.h>
 #include <EEPROM.h>
 
-#define Led_Data 2
+#define Led_Data D2
 #define PixelNum 18
 
 Adafruit_NeoPixel pixels = Adafruit_NeoPixel(PixelNum, Led_Data, NEO_GRB + NEO_KHZ800);
 
 WiFiServer server(80); //Initialize the server on Port 80
 
-const char* ssid = "www.facebook.com/escher.tsai";
+//const char* ssid = "www.facebook.com/escher.tsai";
 //const char* ssid = "dimensionplus";
-const char* password = "25063990";
+//const char* password = "25063990";
+
+//const char* ssid = "TP-LINK_3416";
+//const char* password = "0987054451";
+
+const char* ssid = "whoslab";
+const char* password = "Whotheatre";
 
 boolean incoming = 0;
 
@@ -23,9 +29,11 @@ void setup()
   //WiFi.mode(WIFI_AP);
   WiFi.mode(WIFI_STA);
   //WiFi.softAP("W_H_O_Theatre", "12345678");
+  //pinMode(Led_Data,OUTPUT);
   server.begin();
   pixels.begin();
   pinMode(2,OUTPUT);
+  //pinMode(D2,OUTPUT);
   Serial.begin(115200);
   delay(10);
   Serial.print("Connecting to ");
@@ -39,7 +47,7 @@ void setup()
   }
   Serial.println("");
   Serial.println("WiFi connected");
-  
+  digitalWrite(2,LOW);
   // Start the server
   server.begin();
   Serial.println("Server started");

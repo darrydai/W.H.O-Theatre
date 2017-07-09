@@ -66,19 +66,52 @@ final class UI
           }
           break;
         case 3:
-          for(int i = 0; i < diaboloThreeSound.bufferSize() - 1; i++)
+          if(diaboloThreeSound.isPlaying())
           {
-            float x1 = map( i, 0, diaboloThreeSound.bufferSize(), 0, 150 );
-            float x2 = map( i+1, 0, diaboloThreeSound.bufferSize(), 0, 150 );
-            line( x1, 133 + diaboloThreeSound.mix.get(i)*30, x2, 133 + diaboloThreeSound.mix.get(i+1)*30 );
+            for(int i = 0; i < diaboloThreeSound.bufferSize() - 1; i++)
+            {
+              float x1 = map( i, 0, diaboloThreeSound.bufferSize(), 0, 150 );
+              float x2 = map( i+1, 0, diaboloThreeSound.bufferSize(), 0, 150 );
+              line( x1, 133 + diaboloThreeSound.mix.get(i)*30, x2, 133 + diaboloThreeSound.mix.get(i+1)*30 );
+            }
+          }
+          if(diaboloSound3_2.isPlaying())
+          {
+            for(int i = 0; i < diaboloSound3_2.bufferSize() - 1; i++)
+            {
+              float x1 = map( i, 0, diaboloSound3_2.bufferSize(), 0, 150 );
+              float x2 = map( i+1, 0, diaboloSound3_2.bufferSize(), 0, 150 );
+              line( x1, 133 + diaboloSound3_2.mix.get(i)*30, x2, 133 + diaboloSound3_2.mix.get(i+1)*30 );
+            }
           }
           break;
         case 4:
-          for(int i = 0; i < diaboloFourSound.bufferSize() - 1; i++)
+          if(diaboloFourSound.isPlaying())
           {
-            float x1 = map( i, 0, diaboloFourSound.bufferSize(), 0, 150 );
-            float x2 = map( i+1, 0, diaboloFourSound.bufferSize(), 0, 150 );
-            line( x1, 133 + diaboloFourSound.mix.get(i)*30, x2, 133 + diaboloFourSound.mix.get(i+1)*30 );
+            for(int i = 0; i < diaboloFourSound.bufferSize() - 1; i++)
+            {
+              float x1 = map( i, 0, diaboloFourSound.bufferSize(), 0, 150 );
+              float x2 = map( i+1, 0, diaboloFourSound.bufferSize(), 0, 150 );
+              line( x1, 133 + diaboloFourSound.mix.get(i)*30, x2, 133 + diaboloFourSound.mix.get(i+1)*30 );
+            }
+          }
+          if(diaboloSound4_2.isPlaying())
+          {
+            for(int i = 0; i < diaboloSound4_2.bufferSize() - 1; i++)
+            {
+              float x1 = map( i, 0, diaboloSound4_2.bufferSize(), 0, 150 );
+              float x2 = map( i+1, 0, diaboloSound4_2.bufferSize(), 0, 150 );
+              line( x1, 133 + diaboloSound4_2.mix.get(i)*30, x2, 133 + diaboloSound4_2.mix.get(i+1)*30 );
+            }
+          }
+          if(diaboloSound4_3.isPlaying())
+          {
+            for(int i = 0; i < diaboloSound4_3.bufferSize() - 1; i++)
+            {
+              float x1 = map( i, 0, diaboloSound4_3.bufferSize(), 0, 150 );
+              float x2 = map( i+1, 0, diaboloSound4_3.bufferSize(), 0, 150 );
+              line( x1, 133 + diaboloSound4_3.mix.get(i)*30, x2, 133 + diaboloSound4_3.mix.get(i+1)*30 );
+            }
           }
           break;
         case 5:
@@ -142,14 +175,14 @@ final class UI
       {
         case 1:
           //acce_X value < -15,play the sound file
-          if(sensorAcceVal<(-9))
+          if(sensorAcceVal<(-9)||sensorAcceVal>15)
           {
             //if sound is end,replay the sound file
-            if( diaboloOneSound.position() == diaboloOneSound.length() )
-            {
-              diaboloOneSound.rewind();
-            }
-            diaboloOneSound.play();
+             if( diaboloOneSound.position() == diaboloOneSound.length() )
+             {
+               diaboloOneSound.rewind();
+             }
+             diaboloOneSound.play();
             PlayStatus = "play";
           }
           else if(diaboloOneSound.isPlaying())
@@ -159,14 +192,13 @@ final class UI
           }
           break;
        case 2:
-          if(sensorAcceVal<(-12))
+          if(sensorAcceVal<(-9)||sensorAcceVal>15)
           {
-            if( diaboloTwoSound.position() == diaboloTwoSound.length() )
-            {
-              diaboloTwoSound.rewind();
-              //diaboloTwoSound.play();
-            }
-            diaboloTwoSound.play();
+             if( diaboloTwoSound.position() == diaboloTwoSound.length() )
+             {
+               diaboloTwoSound.rewind();
+             }
+             diaboloTwoSound.play();
             PlayStatus = "play";
           }
           else if(diaboloTwoSound.isPlaying())
@@ -176,13 +208,18 @@ final class UI
           }
           break;
          case 3:
-          if(sensorAcceVal>15)
+          if(sensorAcceVal<(-9)||sensorAcceVal>15)
           {
-            diaboloThreeSound.play();
-            if( diaboloThreeSound.position() == diaboloThreeSound.length() )
-            {
-              diaboloThreeSound.rewind();
-            }
+             if( diaboloThreeSound.position() == diaboloThreeSound.length() )
+             {
+               diaboloThreeSound.pause();
+               diaboloSound3_2.play();
+               if( diaboloSound3_2.position() == diaboloSound3_2.length() )
+               {
+                 diaboloSound3_2.rewind();
+               }
+             }
+             diaboloThreeSound.play();
             PlayStatus = "play";
           }
           else if(diaboloThreeSound.isPlaying())
@@ -190,15 +227,30 @@ final class UI
             diaboloThreeSound.pause();
             PlayStatus = "stop";
           }
+          else if(diaboloSound3_2.isPlaying())
+          {
+            diaboloSound3_2.pause();
+            PlayStatus = "stop";
+          }
           break;
          case 4:
-          if(sensorAcceVal>15)
-          {
-            diaboloFourSound.play();
-            if( diaboloFourSound.position() == diaboloFourSound.length() )
-            {
-              diaboloFourSound.rewind();
-            }
+           if(sensorAcceVal<(-9))
+           {
+             if( diaboloFourSound.position() == diaboloFourSound.length() )
+             {
+               diaboloFourSound.pause();
+               diaboloSound4_2.play();
+               if( diaboloSound4_2.position() == diaboloSound4_2.length() )
+               {
+                 diaboloSound4_2.pause();
+                 diaboloSound4_3.play();
+                 if( diaboloSound4_3.position() == diaboloSound4_3.length() )
+                 {
+                   diaboloSound4_3.rewind();
+                 }
+               }
+             }
+             diaboloFourSound.play();
             PlayStatus = "play";
           }
           else if(diaboloFourSound.isPlaying())
@@ -206,20 +258,36 @@ final class UI
             diaboloFourSound.pause();
             PlayStatus = "stop";
           }
+          else if(diaboloSound4_2.isPlaying())
+          {
+            diaboloSound4_2.pause();
+            PlayStatus = "stop";
+          }
+          else if(diaboloSound4_3.isPlaying())
+          {
+            diaboloSound4_3.pause();
+            PlayStatus = "stop";
+          }
           break;
          case 5:
-          if(sensorAcceVal>15)
+          if(sensorAcceVal<(0))
           {
+            //diaboloFiveSound.setGain();
             diaboloFiveSound.play();
+            //diaboloThreeSound.play();
             if( diaboloFiveSound.position() == diaboloFiveSound.length() )
             {
               diaboloFiveSound.rewind();
+              //diaboloThreeSound.rewind();
             }
             PlayStatus = "play";
+            float r =random(100,500);
+            delay((int)r);
           }
           else if(diaboloFiveSound.isPlaying())
           {
             diaboloFiveSound.pause();
+            //diaboloThreeSound.pause();
             PlayStatus = "stop";
           }
           break;
